@@ -32,17 +32,17 @@ public class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringC
 	private Artikel artikel;
 	@Autowired
 	private JpaArtikelRepository repository;
-	private long idVanTestMixer()  {
-		return super.jdbcTemplate.queryForObject("select id from artikels where naam = 'mixer'", Long.class);
+	private long idVanTestArtikel()  {
+		return super.jdbcTemplate.queryForObject("select id from artikels where naam = 'test'", Long.class);
 	}
 	@Before
 	public void before() {
-		artikel = new Artikel("test",BigDecimal.TEN, BigDecimal.valueOf(12));
+		artikel = new Artikel("test",BigDecimal.TEN, BigDecimal.valueOf(100));
 	}
 	@Test
 	public void read() {
-		Artikel artikel = repository.read(idVanTestMixer()).get();
-		assertEquals("mixer", artikel.getNaam());
+		Artikel artikel = repository.read(idVanTestArtikel()).get();
+		assertEquals("test", artikel.getNaam());
 	}
 	@Test
 	public void readOnbestaandArtikel() {
@@ -72,6 +72,14 @@ public class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringC
 			vorigeNaam = naam;
 		}
 	}	
+	@Test
+	public void algemenePrijsVerhoging() {
+		int aantalAangepast = repository.algemenePrijsVerhoging(BigDecimal.TEN);
+		assertEquals(super.countRowsInTable(ARTIKEL), aantalAangepast);
+		BigDecimal nieuwePrijs = super.jdbcTemplate.queryForObject(
+				"select verkoopprijs from artikels where id=?", BigDecimal.class, idVanTestArtikel());
+		assertEquals(0, BigDecimal.valueOf(132).compareTo(nieuwePrijs));		
+	}
 									
 	
 		

@@ -1,1 +1,1 @@
-insert into artikels(naam, aankoopprijs, verkoopprijs) values ('mixer', 50, 60);
+insert into artikels(naam, aankoopprijs, verkoopprijs) values ('test', 100, 120);
