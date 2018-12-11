@@ -2,7 +2,6 @@ package be.vdab.allesvoordekeuken.repositories;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -23,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import be.vdab.allesvoordekeuken.entities.Artikel;
 import be.vdab.allesvoordekeuken.entities.FoodArtikel;
 import be.vdab.allesvoordekeuken.entities.NonFoodArtikel;
+import be.vdab.allesvoordekeuken.valueobjects.Korting;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -101,6 +101,14 @@ public class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringC
 				"select verkoopprijs from artikels where id=?", BigDecimal.class, idVanFoodArtikel());
 		assertEquals(0, BigDecimal.valueOf(132).compareTo(nieuwePrijs));		
 	}
+	@Test
+	public void kortingenLezen() {
+		Artikel artikel = repository.read(idVanFoodArtikel()).get();
+		assertEquals(1, artikel.getKortingen().size());
+		assertTrue(artikel.getKortingen().contains(new Korting(20,BigDecimal.valueOf(5))));
+			
+	}
+	
 									
 	
 		
