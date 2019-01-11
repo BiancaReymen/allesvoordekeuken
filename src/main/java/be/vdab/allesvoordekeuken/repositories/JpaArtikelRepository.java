@@ -30,6 +30,7 @@ public class JpaArtikelRepository implements ArtikelRepository {
 	public List<Artikel> findByNameContains(String woord) {
 		return manager.createNamedQuery("Artikel.findByNameContains", Artikel.class)
 				.setParameter("zoals", '%' + woord + '%')
+				.setHint("javax.persistence.loadgraph",  manager.createEntityGraph(Artikel.MET_ARTIKELGROEP))
 				.getResultList();
 	}
 	@Override
@@ -39,6 +40,7 @@ public class JpaArtikelRepository implements ArtikelRepository {
 				.setParameter("factor", factor)
 				.executeUpdate();
 	}
+	
 	
 	
 }

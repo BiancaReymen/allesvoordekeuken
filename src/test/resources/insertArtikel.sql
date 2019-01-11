@@ -1,3 +1,3 @@
-insert into artikels(naam, aankoopprijs, verkoopprijs, soort, houdbaarheid) values ('foodartikel', 100, 120, 'F', 7);
-insert into artikels(naam, aankoopprijs, verkoopprijs, soort, garantie) values ('nonfoodartikel', 100, 120, 'NF', 30);
-insert into kortingen(artikelid, vanafaantal, percentage) values ((select id from artikels where naam ='foodartikel'), 20, 5);
+insert into artikels(naam,aankoopprijs,verkoopprijs,houdbaarheid,soort,artikelgroepid) values('testfood',100,120, 7, 'F', (select id from artikelgroepen where naam='test'));
+insert into artikels(naam,aankoopprijs,verkoopprijs,garantie,soort,artikelgroepid) values('testnonfood',100,120, 30, 'NF', (select id from artikelgroepen where naam='test'));
+insert into kortingen(artikelid,vanafAantal,percentage) values ((select id from artikels where naam='testfood'), 20, 5);
